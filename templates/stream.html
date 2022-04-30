@@ -9,12 +9,12 @@
 <canvas id="wave1"  class="position-absolute top-50 start-50 translate-middle" width="1538" height="633"></canvas>
 <canvas id="wave2"  class="position-absolute top-50 start-50 translate-middle" style="display: none;" width="1538" height="633"></canvas>
 </div>
-<audio controls id="audio1" preload="auto" hidden>
+<audio controls id="audio1" preload="auto" hidden crossorigin="anonymous">
     <source src="{{url_for('static', filename= 'test.mp3')}}" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
-<audio controls id="audio2" preload="auto" hidden>
+<audio controls id="audio2" preload="auto" hidden crossorigin="anonymous">
     <source src="{{url_for('static', filename= 'test2.mp3')}}" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>

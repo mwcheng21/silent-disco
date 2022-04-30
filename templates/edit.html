@@ -42,9 +42,17 @@
     Your browser does not support the audio element.
 </audio>
 
+<audio controls id="playlistAudio" preload="auto" hidden>
+    <source src="" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
 
 <script>
     var channel = {{ id }}
+    var playlist = {{ playlist|tojson }}
+    if (playlist[0] == '') {
+        playlist = []
+    }
 </script>
 <script src="{{url_for('static', filename='js/edit.js')}}"></script>
 

@@ -3,21 +3,20 @@ function createAllPlaylistSongs() {
     //create all the songs html
     let playlist = $("#playlist-container");
 
-}
-
+}                   
 function createAllBrowseSongs() {
     let browse = $("#browseSongs");
     $.ajax({
-        url: "getallsonginfo/" + id, //url = database
+        url: "/getall" , //url = database
         type: "GET",
         success: function (data) {
             data.songs.forEach(function (song) {
-                artists = song.artists.join(", ");
+                artists = song.Artists//.join(", ");
                 browse.append(`
                 <div class="row browsesong song" id=${song.id}>
                 <div class="col-9">
                     <div class="songName">
-                        ${song.name}
+                        ${song.TrackName}
                     </div>
                     <div class="artists">
                         ${artists}
@@ -44,16 +43,39 @@ function createAllBrowseSongs() {
 
 
 }
+function createPlaylist(){
+    $("#playlistSongs").html('')
 
+    playlist.forEach(function (song) {
+        $.ajax({
+            url: "/songinfo/" + song,
+            type: "GET",
+            success: function (data) {
+                $("#playlistSongs").append(`<div class="row playlistsong song" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="This song is playing">
+                <div class="col-10">
+                    <div class="songName">
+                        ${data.TrackName}
+                    </div>
+                    <div class="artists">
+                        ${data.Artists}
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button class="btn bg-danger bg-gradient btn-sm"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>`)
+            }
+        })
+
+    })
+}
 function playSong(id) {
     $.ajax({
-        url: "songinfo/" + id, //url = database
-        data: {
-            'songId': id
-        },
+        url: "/songinfo/" + id, //url = database
         type: "GET",
         success: function (data) {
-            $("#audio")[0].attr("src", data.url)
+            $("#audio")[0].src = data.Location
             $(`#audio`)[0].load()
             $(`#audio`)[0].play()
         }
@@ -61,71 +83,70 @@ function playSong(id) {
 
 }
 
-function updatePlaylist() {
+function addSong(id) {
+    playlist.push(id)
+    if (playlist.length == 0) {
+        $("#playlistAudio")[0].play()
+        syncToOthers()
+    }
     $.ajax({
-        url: "update/" + playlistid, //url = database
+        url: "/playlist/" + channel, //url = database
         data: {
-            'songs': 1//songs stringified
+            'tid': id//songs stringified
         },
         type: "POST",
         success: function (data) {
-            $("#audio")[0].attr("src", data.url)
-            $(`#audio`)[0].load()
-            $(`#audio`)[0].play()
+            createPlaylist()
+        }
+    })
+}
+var currentTid = ""
+function syncToOthers(){
+    
+    $.ajax({
+        url: "/current/" + channel, //url = database
+        data: {
+            'currentTime': $("#playlistAudio")[0].currentTime,
+            'masterTime': new Date().getTime(),
+            'tid': currentTid
+        },
+        type: "POST",
+        success: function (data) {
+            console.log(data)
         }
     })
 }
 
-
-function addSong(id) {
-    updatePlaylist()
-
-    // playlist was empyu, set the first song as the current song
-    //if playlist had 1 song, set next song
-
-    //otherwise just updated
-
-}
-function setCurrentSong() {
-    //if playlist empty, return
-
-
-    //delete top song, move everything up
-    let songId = playlist[0];
-
-    let audioLength = $("#playlist-audio1")[0].duration
-    let currentTime = new Date().getTime();
+setInterval(function(){
+    syncToOthers()
+}, 10000)
+$("#playlistAudio")[0].volume = 0
+$("#playlistAudio")[0].onended = function(){
+    //play next
+    playlist.pop(0)
+    currentTid = playlist[0]
     $.ajax({
-        url: '/api/set_current_song',
-        type: 'POST',
-        data: {
-            'songId': songId,
-            'current_time': currentTime,
-            'songTime': 0
-        },
-        dataType: 'json',
+        url: "/songinfo/" + playlist[0],
+        type: "GET",
         success: function (data) {
-
+            $("#playlistAudio")[0].src = data.Location;
+            $("#playlistAudio")[0].load()
+            $("#playlistAudio")[0].play()
         }
-    });
-    setTimeout(function () {
-        setCurrentSong();
-    }, audioLength);
-
-    setNextSong()
+    })
+    createPlaylist()
+    
 }
 
-function setNextSong() {
-    //if theres a second song, set it as the next song
-    $.ajax({
-        url: '/api/set_current_song',
-        type: 'POST',
-        data: {
-            'songId': songId,
-        },
-        dataType: 'json',
-        success: function (data) {
-
-        }
-    });
-}
+$.ajax({
+    url: "/songinfo/" + playlist[0],
+    type: "GET",
+    success: function (data) {
+        $("#playlistAudio")[0].src = data.Location;
+        $("#playlistAudio")[0].load()
+        $("#playlistAudio")[0].play()
+    }
+})
+currentTid = playlist[0]
+createAllBrowseSongs()
+createPlaylist()
