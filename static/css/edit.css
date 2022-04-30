@@ -1,0 +1,41 @@
+.edit-containers {
+    height: 80vh;
+    background-color: rgba(17, 22, 51, 0.71);
+    color: white;
+}
+
+#browseContainer {
+    overflow-y: scroll;
+}
+
+#playlistContainer {
+    overflow-y: scroll;
+}
+
+.songName{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.artists {
+    font-size: 12px;
+}
+
+button{
+    margin-top: 7px;
+}
+
+.song:hover {
+    background-color: rgb(104, 104, 104);
+}
+
+.playlistsong:nth-child(-n+5) {
+    background-color: rgb(61, 61, 61);
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+.playlistsong:nth-child(-n+5) button {
+    pointer-events: none;
+    opacity: .65
+}

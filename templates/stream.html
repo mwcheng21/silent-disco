@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<link href="{{url_for('static', filename='css/stream.css')}}" rel="stylesheet">
+
+<button type="button" id="sync" class="position-absolute top-50 start-50 translate-middle btn btn-secondary btn-circle btn-xl" style="z-index: 100;">Sync</button>
+<div class="wave-container container">
+<canvas id="wave1"  class="position-absolute top-50 start-50 translate-middle" width="1538" height="633"></canvas>
+<canvas id="wave2"  class="position-absolute top-50 start-50 translate-middle" style="display: none;" width="1538" height="633"></canvas>
+</div>
+<audio controls id="audio1" preload="auto" hidden>
+    <source src="{{url_for('static', filename= 'test.mp3')}}" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+<audio controls id="audio2" preload="auto" hidden>
+    <source src="{{url_for('static', filename= 'test2.mp3')}}" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+
+    <div class="row centered-children fixed-bottom">
+        <div class="col-3">
+            <a href="/stream/1"><button type="button" class="btn btn-danger btn-circle btn-xl">1</button></a>
+        </div>
+        <div class="col-3">
+            <a href="/stream/2"><button type="button" class="btn btn-warning btn-circle btn-xl">2</button></a>
+        </div>
+        <div class="col-3">
+            <a href="/stream/3"><button type="button" class="btn btn-primary btn-circle btn-xl">3</button></a>
+        </div>
+        <div class="col-3">
+            <a href="/stream/4"><button type="button" class="btn btn-success btn-circle btn-xl">4</button></a>
+        </div>
+    </div> 
+
+    <script>
+        var channel = {{ id }}
+        $("#audio1").on("ended", function (event) {
+            $("#audio2")[0].play()
+            $("#wave1").hide()
+            $("#wave2").show()
+            currentId = 2
+        })
+        $("#audio2").on("ended", function (event) {
+            $("#audio1")[0].play()
+            $("#wave2").hide()
+            $("#wave1").show()
+            currentId = 1
+        })
+        $(document).ready(function () {
+            createWave(1)
+            createWave(2)
+            var width = $(window).width();
+            var height = $(window).height();
+            $("#wave1").attr("width", width)
+            $("#wave1").attr("height", height)
+            $("#wave2").attr("width", width)
+            $("#wave2").attr("height", height)
+        })
+        $("#sync").click(function () {
+            sync()
+            $("#sync").attr("disabled", true)
+            $("#sync").fadeOut(1000)
+        })
+    </script>
+
+
+    <script src="{{url_for('static', filename= 'js/stream.js')}}"></script>
+{% endblock %}

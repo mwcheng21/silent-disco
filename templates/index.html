@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<link href="{{url_for('static', filename='css/index.css')}}" rel="stylesheet">
+<link href="{{url_for('static', filename='css/background.css')}}" rel="stylesheet">
+
+
+<div class="context">
+    <div class="row" style="padding-bottom: 50px">
+        <div class="col-12">
+            <h1 style="color: white;">Listen to a channel</h1>
+        </div>
+    </div>
+    <div class="row centered-children">
+        <div class="col-xs-12 col-sm-3">
+            <a href="/stream/1"><button type="button" class="btn btn-danger btn-circle btn-xl">1</button></a>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <a href="/stream/2"><button type="button" class="btn btn-warning btn-circle btn-xl">2</button></a>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <a href="/stream/3"><button type="button" class="btn btn-primary btn-circle btn-xl">3</button></a>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+            <a href="/stream/4"><button type="button" class="btn btn-success btn-circle btn-xl">4</button></a>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 50px">
+        <div class="col-12">
+            <a href="/edit/1"><button type="button" class="btn btn-secondary btn-primary btn-xl">DJ this session!</button></a>
+        </div>
+    </div>
+</div>
+
+<div class="area" >
+        <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+        </ul>
+</div >
+
+
+ 
+  <script src="{{url_for('static', filename='js/index.js')}}"></script>
+
+{% endblock %}

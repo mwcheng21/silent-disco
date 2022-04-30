@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<link href="{{url_for('static', filename='css/edit.css')}}" rel="stylesheet">
+
+<div class="container" style="padding-top: 50px;">
+    <div class="row">
+        <div class="col-md-5 col-sm-12 edit-containers shadow" id="browseContainer">
+            <h1>Browse</h1>
+            <hr>
+            <div id="browseSongs">
+ 
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-12" style="height: 50px;"></div>
+        <div class="col-md-5 col-sm-12 edit-containers shadow" id="playlistContainer">
+            <h1>Playlist {{id}}</h1>
+            <hr>
+            <div id="playlistSongs">
+                <div class="row playlistsong song" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="This song is playing">
+                    <div class="col-10">
+                        <div class="songName">
+                            Song 1
+                        </div>
+                        <div class="artists">
+                            Artists
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn bg-danger bg-gradient btn-sm"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio controls class="fixed-bottom  start-50 translate-middle-x" id="audio" preload="auto">
+    <source src="" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+
+<script>
+    var channel = {{ id }}
+</script>
+<script src="{{url_for('static', filename='js/edit.js')}}"></script>
+
+{% endblock %}

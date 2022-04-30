@@ -1,0 +1,23 @@
+.btn-circle.btn-xl {
+    width: 100px;
+    height: 100px;
+    padding: 13px 18px;
+    border-radius: 60px;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+@media (max-width:576px) {
+    .btn-circle.btn-xl {
+        width: 75px;
+        height: 75px;
+        padding: 13px 18px;
+        border-radius: 60px;
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+}
+.centered-children{
+    text-align: center;
+}
