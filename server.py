@@ -81,7 +81,7 @@ def current(id):
 
 @app.route('/getall', methods=['GET'])
 def getAll():
-    songs = exec_statement("SELECT * FROM song LIMIT 10;", "FETCHALL")
+    songs = exec_statement("SELECT * FROM song LIMIT 50;", "FETCHALL")
     return jsonify({"songs": [convertToJson(song) for song in songs]})
 
 

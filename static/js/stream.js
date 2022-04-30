@@ -72,32 +72,31 @@ function createWave(id) {
 
 
 function sync() {
-    $.ajax({
-        url: "/current/" + channel, //url = database
-        type: "GET",
-        success: function (data) {
-            //get the current song
-            $.ajax({
-                url: "/songinfo/" + data.tid, //url = database
-                type: "GET",
-                success: function (data2) {
-                    console.log(data2.Location)
-                    $(`#audio${currentId}`)[0].src = data2.Location
-                    $(`#audio${currentId}`)[0].load()
+    // $.ajax({
+    //     url: "/current/" + channel, //url = database
+    //     type: "GET",
+    //     success: function (data) {
+    //         //get the current song
+    //         $.ajax({
+    //             url: "/songinfo/" + data.tid, //url = database
+    //             type: "GET",
+    //             success: function (data2) {
+    //                 $(`#audio${currentId}`)[0].src = data2.Location
+    //                 $(`#audio${currentId}`)[0].load()
 
-                    let masterTime = parseFloat(data.masterTime)
+    //                 let masterTime = parseFloat(data.masterTime)
                         
-                    $(`#audio${currentId}`)[0].currentTime = parseFloat(data.currentTime) + ((new Date().getTime() - masterTime) / 1000)
-                    $(`#audio${currentId}`)[0].play()
-                }
-            })
+    //                 $(`#audio${currentId}`)[0].currentTime = parseFloat(data.currentTime) + ((new Date().getTime() - masterTime) / 1000)
+    //                 $(`#audio${currentId}`)[0].play()
+    //             }
+    //         })
 
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-
+    //     },
+    //     error: function (error) {
+    //         console.log(error)
+    //     }
+    // })
+    $("#audio1")[0].play()
 }
 
 function playNext() {

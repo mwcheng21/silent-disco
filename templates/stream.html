@@ -3,18 +3,20 @@
 {% block content %}
 
 <link href="{{url_for('static', filename='css/stream.css')}}" rel="stylesheet">
-
+<div class="position-absolute top-0 start-0"  style="padding-left: 50px; padding-top: 50px; color:white; font-size: 30px; z-index: 1000;">
+    <a href="/" style="color:white;"><i class="fa-solid fa-angle-left"></i></a>
+</div>
 <button type="button" id="sync" class="position-absolute top-50 start-50 translate-middle btn btn-secondary btn-circle btn-xl" style="z-index: 100;">Sync</button>
 <div class="wave-container container">
 <canvas id="wave1"  class="position-absolute top-50 start-50 translate-middle" width="1538" height="633"></canvas>
 <canvas id="wave2"  class="position-absolute top-50 start-50 translate-middle" style="display: none;" width="1538" height="633"></canvas>
 </div>
-<audio controls id="audio1" preload="auto" hidden crossorigin="anonymous">
+<audio controls id="audio1" preload="auto" hidden>
     <source src="{{url_for('static', filename= 'test.mp3')}}" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
-<audio controls id="audio2" preload="auto" hidden crossorigin="anonymous">
+<audio controls id="audio2" preload="auto" hidden>
     <source src="{{url_for('static', filename= 'test2.mp3')}}" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
@@ -22,16 +24,16 @@
 
     <div class="row centered-children fixed-bottom">
         <div class="col-3">
-            <a href="/stream/1"><button type="button" class="btn btn-danger btn-circle btn-xl">1</button></a>
+            <a href="/stream/1"><button type="button" class="btn btn-circle btn-xl" style="background-color: #F68741; color: white;">channel 1</button></a>
         </div>
         <div class="col-3">
-            <a href="/stream/2"><button type="button" class="btn btn-warning btn-circle btn-xl">2</button></a>
+            <a href="/stream/2"><button type="button" class="btn btn-circle btn-xl" style="background-color: #1894F2; color: white;">channel 2</button></a>
         </div>
         <div class="col-3">
-            <a href="/stream/3"><button type="button" class="btn btn-primary btn-circle btn-xl">3</button></a>
+            <a href="/stream/3"><button type="button" class="btn btn-circle btn-xl" style="background-color: #FFC000; color: white;">channel 3</button></a>
         </div>
         <div class="col-3">
-            <a href="/stream/4"><button type="button" class="btn btn-success btn-circle btn-xl">4</button></a>
+            <a href="/stream/4"><button type="button" class="btn btn-circle btn-xl" style="background-color: #EE0194; color: white;">channel 4</button></a>
         </div>
     </div> 
 
